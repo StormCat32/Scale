@@ -1,0 +1,18 @@
+Player
+-2 arms
+-just bend the interior angles of the arm
+-breath meter
+-grip strength
+
+Height bar (only shows for new high score?)
+-also show a stat screen at the end
+
+Powerups screen
+
+Launch system
+
+Balloon? Rocket? Stuff? some sort of powered bonus bits
+
+challenges to get more moolah?
+
+powerups and also regular style upgrades
