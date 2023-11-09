@@ -14,9 +14,13 @@ namespace Scale
         private const float _dt = 1 / _fps;
         private float _accumulator;
         private const float _accumulatorMax = 0.2f;
+
+        private Vector2 _grav;
         public GameScene(GraphicsDeviceManager graphics, SpriteBatch spriteBatch):base(graphics, spriteBatch)
         {
             _player = new Player(this);
+
+            _grav = new Vector2(0,9.8f);
             //player gets given all the stats from the start themselves
         }
 
@@ -45,7 +49,7 @@ namespace Scale
 
         private void PhysicsUpdate(float dt)
         {
-            _player.Update(dt);
+            _player.Update(dt,_grav);
         }
 
         public override void Draw()
