@@ -25,11 +25,18 @@ namespace Scale
 
         public void Update(float dt,Vector2 grav)
         {
-            _force += grav; 
-            _vel += ((1 / _mass) * _force) * dt;
+            //update positional movements
+            _vel +=  (grav + (1 / _mass) * _force) * dt; //grav added constant irrespective of mass
             _pos += _vel * dt;
 
+            //update rotational movements
+            _angVel += _torque * (1 / _inertia) * dt;
+            _rot += _angVel * dt;
+
             _force = Vector2.Zero; //force resets to zero at the end of any data steps, then has effects reapplied whenever things appear
+            _torque = 0;
+
+            //need to add some rotational and horizontal damping
         }
 
         public void Draw()
