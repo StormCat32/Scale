@@ -6,8 +6,10 @@ namespace Scale
     internal class Player
     {
         private GameScene _parent;
-        private Vector2 _pos;
-        private Vector2 _vel;
+        private Vector2 _pos; //centre of rectangle body, also pivot point
+        private Vector2 _vel; //the movement
+        private Vector2 _accel; //acceleration, probably just gravity? might not even need this variable
+        private const float _mass = 1;
         public Player(GameScene parent)
         {
             _parent = parent;
