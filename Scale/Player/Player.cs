@@ -8,7 +8,12 @@ namespace Scale
         private GameScene _parent;
         private Vector2 _pos; //centre of rectangle body, also pivot point
         private Vector2 _vel; //the movement
-        private Vector2 _accel; //acceleration, probably just gravity? might not even need this variable
+        private float _accel; //acceleration, probably just gravity? might not even need this variable
+
+        private float _rot; //rotation from the pivot point
+        private float _angVel; //angular velocity from the pivot point
+        private float _torque; //torque. guess from where
+
         private const float _mass = 1;
         public Player(GameScene parent)
         {
@@ -18,8 +23,11 @@ namespace Scale
 
         public void Update(float dt)
         {
-            _vel.Y += dt*60;
-            _pos.Y += dt*_vel.Y;
+            //could be worth capping dt to a fixed rate for physics purposes
+
+            Vector2 F = Vector2.One; //F just needs to be whatever forces are applying to the 
+            _vel += (1 / _mass * F) * dt;
+            _pos += _vel * dt;
         }
 
         public void Draw()
