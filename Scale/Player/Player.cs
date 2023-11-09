@@ -25,7 +25,7 @@ namespace Scale
         {
             //could be worth capping dt to a fixed rate for physics purposes
 
-            Vector2 F = Vector2.One; //F just needs to be whatever forces are applying to the 
+            Vector2 F = Vector2.UnitY*10; //F just needs to be whatever forces are applying to the 
             _vel += (1 / _mass * F) * dt;
             _pos += _vel * dt;
         }

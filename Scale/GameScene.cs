@@ -10,7 +10,7 @@ namespace Scale
         private Player _player;
         private Camera _camera;
 
-        private const float _fps = 60;
+        private const float _fps = 100;
         private const float _dt = 1 / _fps;
         private float _accumulator;
         private const float _accumulatorMax = 0.2f;
@@ -31,7 +31,16 @@ namespace Scale
                 PhysicsUpdate(_dt);
                 _accumulator -= _dt;
             }
-            
+
+            // create float alpha = _accumulator / _dt;
+            //use this to render all transform images (arms and player) as such:
+            /* 
+            void RenderGame( float alpha )
+                for shape in game do
+                    Transform i = shape.previous * alpha + shape.current * (1.0f - alpha)
+                    shape.previous = shape.current
+                    shape.Render( i )
+            */
         }
 
         private void PhysicsUpdate(float dt)
