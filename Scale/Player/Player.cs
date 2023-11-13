@@ -18,13 +18,21 @@ namespace Scale
         private const float _mass = 1f; //mass and inertia, for force and torque respectively
         private const float _inertia = 1f;
 
+        private Texture2D _sprite;
+        private const string _imageName = "player.png";
+        private Vector2 _dimensions;
+
         private List<Arm> _arms;
         public Player()
         {
+            _sprite = Scene.LoadImage(_imageName);
+            
             _pos = new Vector2(200,20);
+            _dimensions = new Vector2(_sprite.Width, _sprite.Height);
+
             _arms = new List<Arm>();
-            Arm leftArm = new Arm();
-            Arm rightArm = new Arm();
+            Arm leftArm = new Arm(new (_pos.X,_pos.Y+_dimensions.Y/3));
+            Arm rightArm = new Arm(new(_pos.X+_dimensions.X, _pos.Y + _dimensions.Y / 3));
             _arms.Add(rightArm); 
             _arms.Add(leftArm);
         }
@@ -52,11 +60,7 @@ namespace Scale
 
         public void Draw()
         {
-            FileStream fileStream = new FileStream("player.png", FileMode.Open);
-            Texture2D sprite = Texture2D.FromStream(Scene.Graphics.GraphicsDevice, fileStream);
-            fileStream.Dispose();
-
-            Scene.SpriteBatch.Draw(sprite, _pos,null,Color.White,_rot, new Vector2(50, 90), 1f,SpriteEffects.None,1f);
+            Scene.SpriteBatch.Draw(_sprite, _pos,null,Color.White,_rot, _dimensions/2, 1f,SpriteEffects.None,1f);
 
             foreach (Arm arm in _arms)
             {
