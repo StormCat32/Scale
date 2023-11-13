@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.IO;
 
@@ -38,13 +39,16 @@ namespace Scale
                 return;
             Vector2 posBefore = Pos;
             Pos += (Pos - LastPos) * _damping;
-            Pos += Scene.Grav * dt;
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                Pos -= Scene.Grav * dt;
+            else
+                Pos += Scene.Grav * dt;
             LastPos = posBefore;
         }
 
         public void Draw()
         {
-            FileStream fileStream = new FileStream("arm.png", FileMode.Open);
+            FileStream fileStream = new FileStream("Content/arm.png", FileMode.Open);
             Texture2D sprite = Texture2D.FromStream(Scene.Graphics.GraphicsDevice, fileStream);
             fileStream.Dispose();
 

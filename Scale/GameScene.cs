@@ -17,6 +17,7 @@ namespace Scale
         
         public GameScene(GraphicsDeviceManager graphics, SpriteBatch spriteBatch):base(graphics, spriteBatch)
         {
+            Graphics.ToString();
             _player = new Player();
             //player gets given all the stats from the start themselves
         }

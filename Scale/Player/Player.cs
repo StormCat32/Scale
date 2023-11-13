@@ -7,6 +7,7 @@ namespace Scale
 {
     internal class Player
     {
+        public Vector2 Pos { get { return _pos; } }
         private Vector2 _pos; //centre of rectangle body, also pivot point
         private Vector2 _vel; //the movement
         private Vector2 _force; //probably just gravity and tension
@@ -19,20 +20,18 @@ namespace Scale
         private const float _inertia = 1f;
 
         private Texture2D _sprite;
-        private const string _imageName = "player.png";
+        private const string _imageName = "Content/player.png";
         private Vector2 _dimensions;
 
         private List<Arm> _arms;
         public Player()
         {
-            _sprite = Scene.LoadImage(_imageName);
-            
             _pos = new Vector2(200,20);
-            _dimensions = new Vector2(_sprite.Width, _sprite.Height);
+            _dimensions = new Vector2(100,180);
 
             _arms = new List<Arm>();
-            Arm leftArm = new Arm(new (_pos.X,_pos.Y+_dimensions.Y/3));
-            Arm rightArm = new Arm(new(_pos.X+_dimensions.X, _pos.Y + _dimensions.Y / 3));
+            Arm leftArm = new Arm(this,new (-_dimensions.X / 2,-_dimensions.Y/6));
+            Arm rightArm = new Arm(this,new (_dimensions.X/2,-_dimensions.Y / 6));
             _arms.Add(rightArm); 
             _arms.Add(leftArm);
         }
@@ -60,6 +59,10 @@ namespace Scale
 
         public void Draw()
         {
+            FileStream fileStream = new FileStream(_imageName, FileMode.Open);
+            Texture2D _sprite = Texture2D.FromStream(Scene.Graphics.GraphicsDevice, fileStream);
+            fileStream.Dispose();
+
             Scene.SpriteBatch.Draw(_sprite, _pos,null,Color.White,_rot, _dimensions/2, 1f,SpriteEffects.None,1f);
 
             foreach (Arm arm in _arms)
