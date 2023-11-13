@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Scale
 {
     internal class Player
     {
-        private GameScene _parent;
         private Vector2 _pos; //centre of rectangle body, also pivot point
         private Vector2 _vel; //the movement
         private Vector2 _force; //probably just gravity and tension
@@ -17,16 +17,22 @@ namespace Scale
 
         private const float _mass = 1f; //mass and inertia, for force and torque respectively
         private const float _inertia = 1f;
-        public Player(GameScene parent)
+
+        private List<Arm> _arms;
+        public Player()
         {
-            _parent = parent;
             _pos = new Vector2(200,20);
+            _arms = new List<Arm>();
+            Arm leftArm = new Arm();
+            Arm rightArm = new Arm();
+            _arms.Add(rightArm); 
+            _arms.Add(leftArm);
         }
 
-        public void Update(float dt,Vector2 grav)
+        public void Update(float dt)
         {
             //update positional movements
-            _vel +=  (grav + (1 / _mass) * _force) * dt; //grav added constant irrespective of mass
+            _vel +=  (Scene.Grav + (1 / _mass) * _force) * dt; //grav added constant irrespective of mass
             _pos += _vel * dt;
 
             //update rotational movements
@@ -37,15 +43,25 @@ namespace Scale
             _torque = 0;
 
             //need to add some rotational and horizontal damping
+
+            foreach(Arm arm in _arms)
+            {
+                arm.Update(dt);
+            }
         }
 
         public void Draw()
         {
             FileStream fileStream = new FileStream("player.png", FileMode.Open);
-            Texture2D sprite = Texture2D.FromStream(_parent.Graphics.GraphicsDevice, fileStream);
+            Texture2D sprite = Texture2D.FromStream(Scene.Graphics.GraphicsDevice, fileStream);
             fileStream.Dispose();
 
-            _parent.SpriteBatch.Draw(sprite, _pos,null,Color.White,_rot, new Vector2(50, 90), 1f,SpriteEffects.None,1f);
+            Scene.SpriteBatch.Draw(sprite, _pos,null,Color.White,_rot, new Vector2(50, 90), 1f,SpriteEffects.None,1f);
+
+            foreach (Arm arm in _arms)
+            {
+                arm.Draw();
+            }
         }
     }
 }

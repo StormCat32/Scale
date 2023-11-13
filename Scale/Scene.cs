@@ -5,8 +5,10 @@ namespace Scale
 {
     abstract class Scene
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        static private GraphicsDeviceManager _graphics;
+        static private SpriteBatch _spriteBatch;
+        private static Vector2 _grav = new Vector2(0, 9.8f);
+
         public Scene(GraphicsDeviceManager graphics, SpriteBatch spriteBatch) 
         { 
             _graphics = graphics;
@@ -17,8 +19,9 @@ namespace Scale
 
         public abstract void Draw();
 
-        public GraphicsDeviceManager Graphics { get { return _graphics; } }
-        public SpriteBatch SpriteBatch { get { return _spriteBatch; } }
+        static public GraphicsDeviceManager Graphics { get { return _graphics; } }
+        static public SpriteBatch SpriteBatch { get { return _spriteBatch; } }
+        static public Vector2 Grav { get { return _grav; } }
 
         //maybe add a mousepressed button activation? 
     }

@@ -1,8 +1,7 @@
 Player
--2 arms
 -just bend the interior angles of the arm
 -breath meter
--grip strength
+-arm clench strength
 
 Height bar (only shows for new high score?)
 -also show a stat screen at the end
